@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "unimadtest",
+  "private_key_id": "5953ade0833cd83eeccb8991242bff54fa7d9b4f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDEOoU1U+MVKd1x\nb31FTTZcgtcyEepi96uIohTuJ5X6D4wFZwOP0f3dXfAKCY9uLm3+RNEs3cmOgTd/\nITIYe+K3mv6HcDKjwMgr6rLexzr+V25zLDnREuEPHkSdO+GdjsH3yngo7b6/aNF4\nI5hpC2pD1KIlUcT/DtvNy0wcDkPQrmJPXDtOsSaB1Tvelu6zDGWmgyB2Ga2vK1S0\nXz0D940TPwUClUyOdcPp4JxE/vsA7B+mRJuTyNp7nyLb/ln4jJOxSgLzJnnN12Bt\n+BOYxuB5TP67TdzHkxQqK/JezcAjej5z8Ke89+bkTJpNMpUN2zQKiI39ylzbDaem\nyT7Y5tEbAgMBAAECggEAArxHtYHN3WWpm9ADqj7a5/JxY++yZl7KTV7oQjAOSMYe\ntZSSDPDO3fi8d+daNuox+ySkDEDeczyDgYowIJc/7QwdsDwOkkNsIIozcPEy3IjR\n4vK8e5jZYLr5sEqjz1NGJCYpnQ7Zy3rlyj70yPVK+r19sfd9DFeXFaKLFRKkPCx4\ntZawXBqpaYQkwTd3I/F+1n7EmyOMwpHhw8s3dxDB3cDOFphGQeJmdKJCgGGd/gCr\n3v2SVxhlsAOiXkotlzf3adREj0isy12iuE6MEfLh6Wrgtic2ixwYGFScmZvdbf85\nOpI1Pyte4bQLi/tMMM+sPMD0bM7Ge1YbBDwbUUkqQQKBgQDkJB0y/WMltKlOIb76\n7ZLu6XHGiSyNivzEXvyGAAH4qMLgj4Oank95K/5iAdqx7+qo7Ug5m+3tNs8BBG2A\nPvqmk7jAcEU7SG35gXIqVROzar1nBm6wpLZ3RMpkwkS0uV2SGsdNbrSH6nS6NhKn\nLq91cmPbSGGKpOg4Pk8yyj/sJQKBgQDcMMt8/8Hr52ljC3cC9NHnRghpiAHHAD9I\nWrb8UQLEzinqyENyHiTaCBtomPcCyL/uEyVBuaqC5df7pIbL4igNygrDFc/2Gnmh\nVfmzUzyhUOrnq3pTYyGnwuKjLpAJ/wAyWKWXykeA+QXtiG3kM7hz06mGDbtKOOVW\nGAWa6RSkPwKBgEw0b/hvQSYAIalyhjuFDdZ17cY2XcZtzZ6+Z7VO3Vm07VtbNMd5\n5+v+sPsFyYo0LHr+v2hW2HOrIhwh4X28C7eGkmjdV5LEz89O2NahEnKUze1S7bhd\nXIGcXcqoRZDkdgfun/ISb4US4KiulS543qzpZ8eAdux7xwG6dnPtsMptAoGAft2e\nYOb7VHCAyBBTAeEND7PKJQO4AnCiBY4+4CHM9pfSjvPT6Gx1zyncoOeBapk//GwL\ni1Lua30CdHrXL6GeclN23/AxYhre+ZYPyMKsrEVzEwg58tGrEn23F048r4W9F0T8\nI/joOedBAxsYNeOW4yWRByviPWGKwZAVqquguQECgYEA047eXha8UbVmWlOTrTOC\nYx9aXebY4K+YZB0GU4cQdKPEP7iSC4CM6QWje5QbfHioiaFJ747c+jL/8k5SJhdl\n9QH0x/Ilnsbpuv933fwLlOAaa+2vgkH+P0/aThS7CAg24A7+vJJ8Gc/YkSARmYhu\n2rcgnP0zeLYZp3JSUUxaWIY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "serviceactestunimad@unimadtest.iam.gserviceaccount.com",
+  "client_id": "102124614101078570171",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/serviceactestunimad%40unimadtest.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -1,0 +1,38 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - 8000:8000
+    volumes:
+      - ./app:/app
+      - ./static:/static
+      - ./media:/media
+      - "C:/Users/balaj/Unimad/v1.0/unimad-v1-gae/unimadtest-5953ade0833c.json:/app/unimadtest-5953ade0833c.json"
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
+    environment:
+      - DEBUG=1
+      - DB_HOST=host.docker.internal
+      - DB_NAME=dbunimadapp
+      - DB_USER=unimad_db_user
+      - DB_PASSWORD=unimad_db_password
+      - DB_PORT=5432
+      - LINKEDIN_KEY=78g5a58sbwy81a
+      - LINKEDIN_SECRET=PNJischnjmCxlZIw
+      - SECRET_KEY=django-insecure-e@pd4ov^-b7%%93g(8s*-1lwdc7flcbrg0*1$5joqu(v3sni0&
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/unimadtest-5953ade0833c.json
+    
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: dbunimadapp
+      POSTGRES_USER: unimad_db_user
+      POSTGRES_PASSWORD: unimad_db_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
