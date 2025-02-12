@@ -36,16 +36,12 @@ from google.cloud import storage
 from google.api_core.exceptions import ResourceExhausted
 
 from unimadapp.server_sent_event_renderer import ServerSentEventRenderer
-from unimadapp.unibot_utils import generate_context, get_message_history_and_tokens, generate_input_prompt, get_unibot_response
-
 import time
 
 import logging
 logger = logging.getLogger(__name__)
 
 from decimal import Decimal
-
-vertexai.init(project="unimadtest", location="us-central1")
 
 def warmup(request):
     # Add any warmup logic here, like warming up caches, etc.
@@ -306,6 +302,8 @@ def get_profile_data(request):
 
     return JsonResponse(response_data)
 
+# Below are the APIs for the unibot, you can use any LLM provider you want to use and simulate the actual working of Unibot (unimad.ai's chatbot)
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def unibot_api(request):
@@ -314,43 +312,30 @@ def unibot_api(request):
     user_input = request.data.get('message')
     section_name = request.data.get('sectionName')
 
-    if section_name == "home" and user_input != "":
-        section_name = "default"
-        message_history = []
-        last_total_tokens = 0
-    else:        
-        # Get message history and last total tokens using the helper function
-        message_history, last_total_tokens = get_message_history_and_tokens(user_profile, section_name)
-
-    input_prompt = generate_input_prompt(user_profile, section_name, user_input)
-
-    context, gen_conf = generate_context(user_profile, section_name)
+    #TODO: Implement the unibot_api or the unibot_api_stream
 
     # Call the reusable function to get Unibot's response
-    result = get_unibot_response(
-        model_name="flash",  # or "pro" depending on your logic
-        user_input=input_prompt,
-        context=context,
-        gen_conf=gen_conf,
-        message_history=message_history,
-        last_total_tokens=last_total_tokens
-    )
-
-    # Handle the response or error
-    if "error" in result:
-        return JsonResponse({"error": result["error"]}, status=result["status_code"])
+    # result = get_unibot_response(
+    #     model_name="flash",  # or "pro" depending on your logic
+    #     user_input=input_prompt,
+    #     context=context,
+    #     gen_conf=gen_conf,
+    #     message_history=message_history,
+    #     last_total_tokens=last_total_tokens
+    # )
          
     # Create history entry
-    UnibotHistory.objects.create(
-        user=user_profile,
-        section_name=section_name,
-        user_message=input_prompt,
-        displayed_user_message=user_input if user_input != input_prompt else "",
-        bot_response=result["response_text"],
-        response_tokens=result["response_token_count"],
-        total_tokens=result["total_tokens"],
-        message_tokens=result["current_message_tokens"]
-    )
+    # UnibotHistory.objects.create(
+    #     user=user_profile,
+    #     section_name=section_name,
+    #     user_message=input_prompt,
+    #     displayed_user_message=user_input if user_input != input_prompt else "",
+    #     bot_response=result["response_text"],
+    #     response_tokens=result["response_token_count"],
+    #     total_tokens=result["total_tokens"],
+    #     message_tokens=result["current_message_tokens"]
+    # )
+    result = {}
 
     # Return the response from Unibot
     return JsonResponse({"response": result["response_text"]})
@@ -363,37 +348,15 @@ def unibot_api_stream(request):
     user_profile = UserProfile.objects.get(user=user)
     user_input = request.data.get('message')
     section_name = request.data.get('sectionName')
-
-    if section_name == "home" and user_input != "":
-        section_name = "default"
-        message_history = []
-        last_total_tokens = 0
-    else:        
-        # Get message history and last total tokens using the helper function
-        message_history, last_total_tokens = get_message_history_and_tokens(user_profile, section_name)
-
-    input_prompt = generate_input_prompt(user_profile, section_name, user_input)
-
-    context, gen_conf = generate_context(user_profile, section_name) 
     
     try:
-        model = GenerativeModel("gemini-1.5-flash-002", system_instruction=[context])
-
-        generation_config = gen_conf
-
-        # Start the chat session
-        chat_session = model.start_chat(history=message_history)
 
         def event_stream():
             accumulated_response = []
 
             try:
-
-                responses = chat_session.send_message(
-                    content=[input_prompt],
-                    generation_config=generation_config,
-                    stream=True  # Enable streaming
-                )
+                #TODO: Implement the streaming response for unibot_api_stream
+                responses=[]                
                 
                 for chunk in responses:
                     # Stream the current chunk to the client
@@ -404,37 +367,17 @@ def unibot_api_stream(request):
             except Exception as e:
                 yield f'data: {json.dumps({"error": "An error occurred while streaming"})}\n\n'
 
-            # After streaming all chunks, store the complete response
-            complete_response = ''.join(accumulated_response)
-
-            # Calculate tokens for the complete response
-            response_token_count = model.count_tokens(complete_response).total_tokens
-
-            # Calculate tokens for the current message
-            if last_total_tokens == 0:
-                # First message: include context
-                count_response = model.count_tokens(context + input_prompt + complete_response)
-                current_message_tokens = count_response.total_tokens
-                total_tokens = current_message_tokens
-            else:
-                # Subsequent messages
-                count_response = model.count_tokens([Content(role="user", parts=[Part.from_text(input_prompt)]), Content(role="model", parts=[Part.from_text(complete_response)])])
-                current_message_tokens = count_response.total_tokens
-
-                # Add current message tokens to the total tokens from the last message
-                total_tokens = last_total_tokens + current_message_tokens
-
             # Store the complete response in the database
-            UnibotHistory.objects.create(
-                user=user_profile,
-                section_name=section_name,
-                user_message=input_prompt,
-                displayed_user_message=user_input if user_input != input_prompt else "",
-                bot_response=complete_response,
-                response_tokens=response_token_count,
-                total_tokens=total_tokens,
-                message_tokens=current_message_tokens
-            )   
+            # UnibotHistory.objects.create(
+            #     user=user_profile,
+            #     section_name=section_name,
+            #     user_message=input_prompt,
+            #     displayed_user_message=user_input if user_input != input_prompt else "",
+            #     bot_response=complete_response,
+            #     response_tokens=response_token_count,
+            #     total_tokens=total_tokens,
+            #     message_tokens=current_message_tokens
+            # )
 
         # Return the streaming response
         response = StreamingHttpResponse(event_stream(), content_type="text/event-stream")
